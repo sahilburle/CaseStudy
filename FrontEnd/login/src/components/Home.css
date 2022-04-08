@@ -1,0 +1,15 @@
+body{
+    /* background-image: url(https://wallpaperaccess.com/full/2593140.jpg); */
+    /* filter: blur(4px); */
+    background-image: url(C:/Users/saanilra/Desktop/Codes/React/Front/login/src/homepage.jpg) ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+
+}
+
+label{
+    color:blue;
+    font-weight: bolder;
+}

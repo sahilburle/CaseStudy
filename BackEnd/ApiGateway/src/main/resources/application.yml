@@ -1,0 +1,79 @@
+server:
+  port: 5500
+
+eureka:
+  client:
+    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:5000/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+         '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+      routes:
+        - id: userProfile-service
+          uri: lb://userProfile-service
+          predicates:
+            - Path=/profile/**
+#          filters:
+#            -name: CircuitBreaker
+#             args:
+#              name: profile-service
+#              fallbackuri: forward:/profileServiceFallBack
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/products/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: product-service
+#                fallbackuri: forward:/productServiceFallBack
+
+        - id: Cart-service
+          uri: lb://Cart-service
+          predicates:
+            - Path=/mycart/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: cart-service
+#                fallbackuri: forward:/cartServiceFallBack
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: order-service
+#                fallbackuri: forward:/orderServiceFallBack
+
+        - id: website-controller
+          uri: lb://website-controller
+          predicates:
+            - Path=/authenticate
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: auth-service
+#                fallbackuri: forward:/authServiceFallBack
+
+        - id: payment-Gateway
+          uri: lb://payment-Gateway
+          predicates:
+            - Path=/paymentStripe/**
